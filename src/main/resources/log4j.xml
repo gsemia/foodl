@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <appender name="console-log" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <param name="threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%-6.6t] %p %c - %m%n"/>
+        </layout>
+    </appender>
+
+
+    <appender name="sync-file-log" class="org.apache.log4j.FileAppender">
+        <param name="File" value="${log}/foodl.log" />
+        <param name="append" value="false" />
+        <param name="threshold" value="debug" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%-6.6t] %p %c - %m%n"/>
+        </layout>
+    </appender>
+
+    <appender name="async-file-log" class="org.apache.log4j.AsyncAppender">
+        <appender-ref ref="sync-file-log" />
+        <appender-ref ref="console-log" />
+    </appender>
+
+    <root>
+        <priority value ="debug" />
+        <appender-ref ref="async-file-log" />
+    </root>
+
+</log4j:configuration>
